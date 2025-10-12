@@ -1,9 +1,16 @@
-import React from 'react';
-import { AppBar, Toolbar, Typography, Box, Button } from '@mui/material';
+import React, { useState } from 'react';
+import { AppBar, Toolbar, Typography, Box, Button, IconButton, Badge } from '@mui/material';
 import { Link } from 'react-router-dom';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { useCart } from '../context/CartContext';
+import MiniCartDrawer from './MiniCartDrawer'; // 👈 import
 
 export default function HeaderBar() {
+  const { count } = useCart();
+  const [openCart, setOpenCart] = useState(false);
+
   return (
+    <>
     <AppBar
       position="static"
       sx={{
@@ -39,7 +46,7 @@ export default function HeaderBar() {
               '&:hover': { color: '#fff', backgroundColor: '#2a2a2a' },
             }}
           >
-            Inventory
+            Store
           </Button>
           <Button
             component={Link}
@@ -63,8 +70,17 @@ export default function HeaderBar() {
           >
             Dashboard
           </Button>
+
+          <IconButton sx={{ color: '#ccc' }} onClick={() => setOpenCart(true)}>
+              <Badge badgeContent={count} color="primary">
+                <ShoppingCartIcon />
+              </Badge>
+            </IconButton>
         </Box>
       </Toolbar>
     </AppBar>
+    {/* 🛒 Mini Cart Drawer */}
+      <MiniCartDrawer open={openCart} onClose={() => setOpenCart(false)} />
+    </>
   );
 }
