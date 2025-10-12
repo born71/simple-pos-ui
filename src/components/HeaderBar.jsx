@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { AppBar, Toolbar, Typography, Box, Button, IconButton, Badge } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useCart } from '../context/CartContext';
 import MiniCartDrawer from './MiniCartDrawer'; // 👈 import
@@ -8,6 +8,7 @@ import MiniCartDrawer from './MiniCartDrawer'; // 👈 import
 export default function HeaderBar() {
   const { count } = useCart();
   const [openCart, setOpenCart] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <>
@@ -70,6 +71,10 @@ export default function HeaderBar() {
           >
             Dashboard
           </Button>
+
+          <Button onClick={() => navigate('/login')} sx={{ color: '#ccc' }}>
+              เข้าสู่ระบบ
+            </Button>
 
           <IconButton sx={{ color: '#ccc' }} onClick={() => setOpenCart(true)}>
               <Badge badgeContent={count} color="primary">

@@ -6,6 +6,7 @@ import StoreGrid from './components/StoreGrid';
 import ProductList from './components/ProductList';
 import ProductDetails from './components/ProductDetails';
 import CartPage from './components/CartPage';
+import LoginPage from './pages/LoginPage';
 
 function App() {
   return (
@@ -13,10 +14,11 @@ function App() {
       <HeaderBar />
       <Container maxWidth="lg" sx={{ mt: 4 }}>
         <Routes>
-          <Route path="/" element={<StoreGrid />} />      {/* 👈 Default route */}
+          <Route path="/" element={<StoreGrid />} />     
           <Route path="/inventory" element={<ProductList />} />
           <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/cart" element={<CartPage />} />
+          <Route path="/login" element={<LoginPage />} />  
         </Routes>
       </Container>
     </Router>
