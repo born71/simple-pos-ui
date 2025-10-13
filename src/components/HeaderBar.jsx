@@ -3,7 +3,7 @@ import { AppBar, Toolbar, Typography, Box, Button, IconButton, Badge } from '@mu
 import { Link, useNavigate } from 'react-router-dom';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useCart } from '../context/CartContext';
-import MiniCartDrawer from './MiniCartDrawer'; // 👈 import
+import MiniCartDrawer from './MiniCartDrawer'; 
 
 export default function HeaderBar() {
   const { count } = useCart();
@@ -15,7 +15,7 @@ export default function HeaderBar() {
     <AppBar
       position="static"
       sx={{
-        backgroundColor: '#fff', // dark gray / black
+        backgroundColor: '#fff', 
         boxShadow: '1px',
         borderBottom: '2px solid #0f03033f',
       }}
