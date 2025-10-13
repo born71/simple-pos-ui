@@ -12,6 +12,7 @@ import {
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import { mockProducts } from '../mock/mockProducts';
 
 export default function StoreGrid() {
   const [products, setProducts] = useState([]);
@@ -21,8 +22,19 @@ export default function StoreGrid() {
 
   useEffect(() => {
     getProducts()
-      .then(res => setProducts(res.data))
-      .catch(err => console.error('Error fetching products:', err))
+      .then(res => {
+        if (res && res.data && res.data.length > 0) {
+          setProducts(res.data);
+        } else {
+          console.warn("⚠️ No products from API — using mock data");
+          setProducts(mockProducts);
+        }
+      })
+      .catch(err => {
+        console.error("Error fetching products:", err);
+        console.warn("⚠️ Using mock data instead");
+        setProducts(mockProducts);
+      })
       .finally(() => setLoading(false));
   }, []);
 
