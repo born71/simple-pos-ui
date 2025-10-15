@@ -10,7 +10,10 @@ import {
   Stack,
   Box
 } from '@mui/material';
+import { useCart } from '../context/CartContext';
 import '../styles/ProductDetails.css';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
 export default function ProductDetails() {
   const { id } = useParams();
@@ -18,6 +21,18 @@ export default function ProductDetails() {
   const [loading, setLoading] = useState(true);
   const [useMock, setUseMock] = useState(false);
 
+  const { addItem } = useCart();
+
+    const Toast = withReactContent(Swal.mixin({
+      toast: true,
+      position: 'bottom-end', 
+      showConfirmButton: false,
+      timer: 1500,
+      timerProgressBar: true,
+      background: '#ffffffff', 
+      color: '#00912eff',
+    }));
+  
   useEffect(() => {
     getProductById(id)
       .then((res) => {
@@ -41,6 +56,7 @@ export default function ProductDetails() {
   // ✅ Use mock placeholder when backend is down
   const productData = useMock
     ? {
+        id: 0,
         name: "Sample Product",
         category: "Demo Category",
         price: 0.0,
@@ -52,11 +68,9 @@ export default function ProductDetails() {
   if (!productData) return <Typography color="error">Product not found.</Typography>;
 
   const backendBaseUrl = 'http://localhost:8080';
-  const imageSrc = productData.imageUrl
-    ? productData.imageUrl.startsWith("http")
-      ? productData.imageUrl
-      : `${backendBaseUrl}${productData.imageUrl}`
-    : 'https://via.placeholder.com/400x400?text=No+Image';
+  const imageSrc = productData.imageUrl?.startsWith("http")
+    ? productData.imageUrl
+    : `${backendBaseUrl}${productData.imageUrl}`;
 
   return (
     <Paper className="product-details-card">
@@ -81,7 +95,8 @@ export default function ProductDetails() {
         <Typography><strong>Stock Quantity:</strong> {productData.stockQuantity}</Typography>
       </Box>
 
-      <Stack direction="row" spacing={2} justifyContent="left" sx={{ mt: 4 }}>
+      {/* 🛒 Buttons */}
+      <Stack direction="row" spacing={2} justifyContent="space-between" sx={{ mt: 4 }}>
         <Button
           variant="contained"
           color="primary"
@@ -90,6 +105,26 @@ export default function ProductDetails() {
           className="back-button"
         >
           ← Back to Store
+        </Button>
+
+        <Button
+          variant="outlined"
+          size="small"
+          onClick={() => {addItem(productData, 1)
+            Toast.fire({
+                icon: 'success',
+                title: `${product.name} added to cart!`
+              });
+            }}  
+          sx={{
+            textTransform: 'none',
+            borderRadius: 2,
+            px: 2,
+            py: 0.5,
+            ml: 2,
+          }}
+        >
+          Add to Cart
         </Button>
       </Stack>
 

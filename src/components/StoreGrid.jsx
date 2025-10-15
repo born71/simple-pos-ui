@@ -13,12 +13,24 @@ import {
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { mockProducts } from '../mock/mockProducts';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
 export default function StoreGrid() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const { addItem } = useCart();
+  const Toast = withReactContent(Swal.mixin({
+    toast: true,
+    position: 'bottom-end', 
+    showConfirmButton: false,
+    timer: 1500,
+    timerProgressBar: true,
+    background: '#ffffffff', 
+    color: '#00912eff',
+  }));
+
 
   useEffect(() => {
     getProducts()
@@ -45,7 +57,7 @@ export default function StoreGrid() {
   return (
     <Box sx={{ mt: 4 }}>
       <Typography variant="h5" sx={{ mb: 3, fontWeight: 600, textAlign: 'center' }}>
-        🏬 Storefront
+        Welcome
       </Typography>
 
       <Grid container spacing={3}>
@@ -107,7 +119,14 @@ export default function StoreGrid() {
                   <Button
                     variant="outlined"
                     size="small"
-                    onClick={() => addItem(product, 1)}        // 👈 add here
+                    onClick={() => {
+                      addItem(product, 1)
+                      Toast.fire({
+                        icon: 'success',
+                        title: `${product.name} added to cart!`
+                      });
+                    }
+                    }       
                     sx={{
                       textTransform: 'none',
                       borderRadius: 2,
