@@ -109,8 +109,12 @@ export default function HeaderBar() {
                   anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                   transformOrigin={{ vertical: 'top', horizontal: 'right' }}
                 >
-                  <MenuItem disabled>👋 {user.name}</MenuItem>
-                  <MenuItem onClick={handleLogout}>ออกจากระบบ</MenuItem>
+                  <MenuItem onClick={() => {
+                    handleMenuClose();
+                    navigate('/user');
+                    }}>
+                      Profile</MenuItem>
+                  <MenuItem onClick={handleLogout}>Sign out</MenuItem>
                 </Menu>
               </>
             )}
