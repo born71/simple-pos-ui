@@ -10,6 +10,7 @@ import LoginPage from './pages/LoginPage';
 import UserInfo from './pages/UserInfo';
 import RegisterPage from './pages/RegisterPage';
 import EditUserPage from './pages/EditUserPage';
+import SalesPage from './pages/SalesPage';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/user" element={<UserInfo />} />
           <Route path="/user/edit" element={<EditUserPage />} />
+          <Route path="/sales" element={<SalesPage />} />
         </Routes>
       </Container>
     </Router>
